@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 TAILWIND_APP_NAME = 'theme'
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    "127.0.0.1", "localhost",
 ]
 
 NPM_BIN_PATH = "/usr/bin/npm"
@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_browser_reload',
-    'fluxo_cash',
     'tailwind',
     'theme',
+    'fluxo_cash',
 ]
 
 MIDDLEWARE = [
