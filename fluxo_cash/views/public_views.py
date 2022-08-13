@@ -21,3 +21,6 @@ class Register(View):
         if(request.user.is_authenticated):
             return redirect('app')
         return render(request, 'public/register.html')
+
+    def post(self, request, *args, **kwargs):
+        ...
