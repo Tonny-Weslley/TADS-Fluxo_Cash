@@ -33,7 +33,7 @@ INTERNAL_IPS = [
     "127.0.0.1", "localhost",
 ]
 
-NPM_BIN_PATH = "/usr/bin/npm"
+NPM_BIN_PATH = "C:\Program Files\\nodejs\\npm.cmd"
 # Application definition
 
 INSTALLED_APPS = [

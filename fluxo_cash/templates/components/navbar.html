@@ -2,9 +2,26 @@
 {% load static %}
 
 {% block content %}
-<nav>
-    <div class="bg-green-800 dark:bg-gray-900 p-4">
-        <img src="{% static 'images/brand/logo_dark.png' %}" alt="fluxo Cash logomarca" class="">
+<nav class="dark:bg-gray-900 py-1 px-4">
+    <div class="flex justify-between align-center">
+        <div class="w-2/6 flex justify-start align-center">
+            <img 
+            src="{% static 'images/icons/mobile_menu.png' %}" 
+            alt="Hamburger menu icon"
+            class="w-10 h-10 rounded hover:border border-gray-600"/>
+        </div>
+        <div class="w-2/6 flex justify-center align-center">
+            <img 
+            src="{% static 'images/brand/logo_dark.png' %}" 
+            alt="fluxo Cash logo" 
+            class="w-8 h-10"/>
+        </div>
+
+        <div id="autenticate_area" class="w-2/6 flex justify-end align-center row">
+            <a href="#" class="p-2 rounded text-gray-50 text-sm">Login</a>
+            <a href="#" class="p-2 bg-green-700 rounded text-gray-50 text-sm">Sign-in</a>
+        </div>
+
     </div>
 </nav>
 {% endblock%}
