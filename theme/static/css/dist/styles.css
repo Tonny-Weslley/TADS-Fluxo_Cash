@@ -1189,6 +1189,10 @@ select {
     flex-direction: row;
   }
 
+  .md\:rounded {
+    border-radius: 0.25rem;
+  }
+
   .md\:py-2 {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;

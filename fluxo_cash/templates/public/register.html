@@ -5,8 +5,8 @@
     <div class="container m-auto md:py-10">
 
         <a 
-        href="{% url 'index' %}" 
-        class="rounded bg-green-700 text-gray-50 font-semibold pr-4 pl-2 py-3 flex align-center md:w-fit text-semibold md:text-lg justify-center">
+        href="{% url 'index' %}"
+        class="md:rounded bg-green-700 text-gray-50 font-semibold pr-4 pl-2 py-3 flex align-center md:w-fit text-semibold md:text-lg justify-center">
             <img 
             src="{% static 'images/icons/left_arrow.png' %}" 
             alt="back link"
@@ -113,7 +113,7 @@
                     <button class="w-full lg:w-fit py-2 px-5 bg-green-800 mt-5 text-gray-50 rounded hover:bg-green-600">Sign-up</button>
                 </div>
             </form>
-            <p class="text-gray-50 text-center mt-3">already have an account? <a href="{% url 'login' %}" class="text-green-600">Login</a></p>
+            <p class="text-gray-50 text-center mt-3">Already have an account? <a href="{% url 'login' %}" class="text-green-600">Login</a></p>
 
         </div>
     </div>
