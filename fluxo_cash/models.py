@@ -11,6 +11,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return (f'{self.id} - {self.user.username}')
 
+    def updateBalance(self, type, value):
+        if(type == '1'):
+            self.balance += value
+        else:
+            self.balance -= value
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)

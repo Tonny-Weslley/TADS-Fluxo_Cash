@@ -45,6 +45,7 @@ class AddRecord(View):
                 rec = Record(name=rec_name, value=rec_value,
                              record_type=rec_type, id_tag=rec_tag, id_userProfile=rec_user)
                 rec.save()
+                request.user.userprofile.updateBalance(rec_type, rec_value)
                 return redirect('app')
 
         else:

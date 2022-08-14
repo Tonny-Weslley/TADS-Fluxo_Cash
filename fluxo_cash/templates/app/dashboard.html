@@ -1,84 +1,47 @@
-{% extends 'global/base.html' %} {% load static %} {% block content %} 
+{% extends 'global/base.html' %} {% load static %} {% block content %}
 {%include 'components/navbar_app.html' %}
 
-<section
-  id="conteudo_landing"
-  class="bg-gray-900 flex align-center justify-around flex-row container mx-auto h-full"
->
-  <aside class="flex bg-gray-900 align-center justify-center flex-col">
-    <h1 class="text-gray-50 text-4xl my-auto">Aqui vem um grafico em pizza</h1>
-  </aside>
-  <main class="flex bg-gray-900 align-center justify-center flex-col mt-5">
-    <form action="{% url 'add_record' %}" method="post" class="flex">
-      {% csrf_token %}
-      <select name="type" id="type" class="border-none rounded-l-lg">
-        <option value="0" class="backdrop-opacity-60">🔴</option>
-        <option value="1" class="backdrop-opacity-60">🟢</option>
-      </select>
-      <input
-        type="text"
-        name="name"
-        class="border-none"
-        placeholder="Register Name"
-        required
-      />
-      <input
-        type="number"
-        step="any"
-        name="value"
-        id="value"
-        class="border-none w-40"
-        placeholder="Value"
-        required
-      />
-      <select name="tag" id="tag" class="border-none">
-        <option value="" hidden>Tag</option>
-        {% for tag in tags %}
-          <option value="{{ tag.id }}">{{ tag.name }}</option>
-        {% endfor %}
-      </select>
+<main class="mt-2 w-screen flex flex-col lg:flex-row">
+  
+  <div class="">
+    {% if user.userprofile.balance >= 0%}
+    <h1 class="text-green-800 text-center text-6xl my-4">
+      R$ {{ user.userprofile.balance }}
+    </h1>
+    {% else %}
+    <h1 class="text-red-700 text-center text-6xl my-4">
+      R$ {{ user.userprofile.balance }}
+    </h1>
+    {% endif %}
+  </div>
 
-      <button
-        type="submit"
-        class="bg-green-800 text-gray-50 py-2 px-5 rounded-r-lg"
-      >
-        Add
-      </button>
-    </form>
-
-
-    <div id="Record_Show" class="mt-4">
-
-        {% for record in records %}
-        
-            <div class="flex w-fit mt-4 m-auto">
-                <div class="flex flex-col bg-slate-200 pr-28 pl-8 rounded-l-lg">
-                    <span class="text-gray-50 text-2xl">{{ record.name }}</span>
-
-                    {% if record.record_type == 0 %}
-                    <span class="text-red-500 mt-2">- R$ {{ record.value }}</span>
-                    {% else %}
-                    <span class="text-green-500 mt-2">+ R$ {{ record.value }}</span>
-                    {% endif %}
-
-                    <span class="text-gray-50 mt-2">{{ record.id_tag.name }}</span>
-                </div>
-                <div class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg">
-                    <img src=" {% static 'images/icons/copy.png' %} " class="w-7">
-                    <img src=" {% static 'images/icons/edit.png' %} " class="w-7  my-5">
-                    <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
-                </div>
-
-            </div>
-        
-        {% endfor %}
-
-
-
+  <div>
+    {% for record in records %}
+  <div class="w-5/6 mx-auto flex my-4">
+    <div
+      class="flex pt-1 pb-2 bg-gray-400 rounded-l-lg px-5 w-full justify-between"
+    >
+      <div>
+        <h1 class="text-gray-50 text-2xl">{{ record.name }}</h1>
+        {% if record.record_type == 0 %}
+        <span class="text-red-700 mt-2">- R$ {{ record.value }}</span>
+        {% else %}
+        <span class="text-green-700 mt-2">+ R$ {{ record.value }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <span class="text-gray-50 mt-4">{{ record.id_tag.name }}</span>
+      </div>
     </div>
 
+    <div
+      class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg"
+    ></div>
+  </div>
 
-  </main>
-</section>
+  {% endfor %}
+  </div>
+  
+</main>
 
 {% endblock %}
