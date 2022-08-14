@@ -25,7 +25,7 @@ class Record(models.Model):
     id_userProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     id_tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True)
     value = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    Record_type = models.BooleanField()
+    record_type = models.BooleanField()
     date_in = models.DateField(auto_now_add=True, blank=True)
 
     def __str__(self):

@@ -10,7 +10,9 @@ class App(View):
     def get(self, request, *args, **kwargs):
         if(request.user.is_authenticated):
             tags = Tag.objects.all()
-            context = {'tags': tags}
+            records = Record.objects.filter(
+                id_userProfile=request.user.userprofile)
+            context = {'tags': tags, 'records': records}
             return render(request, 'app/dashboard.html', context)
         return redirect('login')
 
@@ -41,7 +43,7 @@ class AddRecord(View):
                 rec_tag = Tag.objects.get(id=request.POST['tag'])
                 rec_user = request.user.userprofile
                 rec = Record(name=rec_name, value=rec_value,
-                             Record_type=rec_type, id_tag=rec_tag, id_userProfile=rec_user)
+                             record_type=rec_type, id_tag=rec_tag, id_userProfile=rec_user)
                 rec.save()
                 return redirect('app')
 

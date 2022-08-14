@@ -45,6 +45,39 @@
         Add
       </button>
     </form>
+
+
+    <div id="Record_Show" class="mt-4">
+
+        {% for record in records %}
+        
+            <div class="flex w-fit mt-4 m-auto">
+                <div class="flex flex-col bg-slate-200 pr-28 pl-8 rounded-l-lg">
+                    <span class="text-gray-50 text-2xl">{{ record.name }}</span>
+
+                    {% if record.record_type == 0 %}
+                    <span class="text-red-500 mt-2">- R$ {{ record.value }}</span>
+                    {% else %}
+                    <span class="text-green-500 mt-2">+ R$ {{ record.value }}</span>
+                    {% endif %}
+
+                    <span class="text-gray-50 mt-2">{{ record.id_tag.name }}</span>
+                </div>
+                <div class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg">
+                    <img src=" {% static 'images/icons/copy.png' %} " class="w-7">
+                    <img src=" {% static 'images/icons/edit.png' %} " class="w-7  my-5">
+                    <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
+                </div>
+
+            </div>
+        
+        {% endfor %}
+
+
+
+    </div>
+
+
   </main>
 </section>
 
