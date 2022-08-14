@@ -6,7 +6,9 @@ from django.views import View
 
 class App(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'app/dashboard.html')
+        if(request.user.is_authenticated):
+            return render(request, 'app/dashboard.html')
+        return redirect('login')
 
 
 class Logout(View):
