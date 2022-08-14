@@ -10,4 +10,5 @@ urlpatterns = [
 
     # Private views
     path('app/', App.as_view(), name='app'),
+    path('logout/', Logout.as_view(), name='logout'),
 ]
