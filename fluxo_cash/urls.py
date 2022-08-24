@@ -12,4 +12,6 @@ urlpatterns = [
     path('app/', App.as_view(), name='app'),
     path('logout/', Logout.as_view(), name='logout'),
     path('add_record/', AddRecord.as_view(), name='add_record'),
+    path('add_balance/', AddBalance.as_view(), name='add_balance'),
+    path('balance_viewer/', BalanceView.as_view(), name='balance_viewer'),
 ]

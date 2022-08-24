@@ -1,0 +1,20 @@
+{% extends 'global/base.html' %} {% load static %} {% block content %} 
+{%include 'components/navbar_app.html' %}
+
+<main class="mt-10 w-screen">
+
+
+    <form action="{% url 'add_balance' %}" method="post" class="m-auto w-fit">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Name your balance"
+        class="rounded-lg" required
+        >
+        <button type="submit" class="bg-green-700 px-6 py-2 text-white rounded-lg"> create </button>
+
+    </form>
+
+
+</main>
+
+
+{% endblock %}

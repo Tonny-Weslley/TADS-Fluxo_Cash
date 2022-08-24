@@ -1,20 +1,41 @@
+from unicodedata import decimal
+
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views import View
 
-from ..models import Record, Tag
+from ..models import Balance, Record, Tag
 
 
 class App(View):
     def get(self, request, *args, **kwargs):
         if(request.user.is_authenticated):
-            tags = Tag.objects.all()
-            records = Record.objects.filter(
-                id_userProfile=request.user.userprofile)
-            context = {'tags': tags, 'records': records}
+            balances = Balance.objects.filter(id_user=request.user.id)
+            context = {'balances': balances}
             return render(request, 'app/dashboard.html', context)
         return redirect('login')
+
+
+class AddBalance(View):
+    def get(self, request, *args, **kwargs):
+        if(request.user.is_authenticated):
+            return render(request, 'app/add_balance.html')
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        balance = Balance(id_user=request.user, name=name, value=0)
+        balance.save()
+        return redirect('app')
+
+
+class BalanceView(View):
+    def get(self, request, *args, **kwargs):
+        balance = Balance.objects.get(id=request.GET.get('id'))
+        records = Record.objects.filter(id_balance=balance)
+        tags = Tag.objects.all()
+        context = {'balance': balance, 'records': records, 'tags': tags}
+        return render(request, 'app/balance_viewer.html', context)
 
 
 class Logout(View):
@@ -41,12 +62,12 @@ class AddRecord(View):
                 rec_name = request.POST['name']
                 rec_value = request.POST['value']
                 rec_tag = Tag.objects.get(id=request.POST['tag'])
-                rec_user = request.user.userprofile
+                balance = Balance.objects.get(id=request.POST['balance'])
                 rec = Record(name=rec_name, value=rec_value,
-                             record_type=rec_type, id_tag=rec_tag, id_userProfile=rec_user)
+                             record_type=rec_type, id_tag=rec_tag, id_balance=balance)
                 rec.save()
-                request.user.userprofile.updateBalance(rec_type, rec_value)
-                return redirect('app')
+                balance.ajust(rec.value, rec.record_type)
+                return redirect('balance_viewer')
 
         else:
             return redirect('login')

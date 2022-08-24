@@ -1,47 +1,40 @@
-{% extends 'global/base.html' %} {% load static %} {% block content %}
+{% extends 'global/base.html' %} {% load static %} {% block content %} 
 {%include 'components/navbar_app.html' %}
 
-<main class="mt-2 w-screen flex flex-col lg:flex-row">
-  
-  <div class="">
-    {% if user.userprofile.balance >= 0%}
-    <h1 class="text-green-800 text-center text-6xl my-4">
-      R$ {{ user.userprofile.balance }}
-    </h1>
-    {% else %}
-    <h1 class="text-red-700 text-center text-6xl my-4">
-      R$ {{ user.userprofile.balance }}
-    </h1>
-    {% endif %}
+<main class="mt-2 w-screen flex flex-col">
+  <div class="flex mt-5">
+    <h1 class="text-white m-auto text-5xl">Seus Balanços</h1>
   </div>
 
-  <div>
-    {% for record in records %}
-  <div class="w-5/6 mx-auto flex my-4">
-    <div
-      class="flex pt-1 pb-2 bg-gray-400 rounded-l-lg px-5 w-full justify-between"
-    >
-      <div>
-        <h1 class="text-gray-50 text-2xl">{{ record.name }}</h1>
-        {% if record.record_type == 0 %}
-        <span class="text-red-700 mt-2">- R$ {{ record.value }}</span>
-        {% else %}
-        <span class="text-green-700 mt-2">+ R$ {{ record.value }}</span>
-        {% endif %}
-      </div>
-      <div>
-        <span class="text-gray-50 mt-4">{{ record.id_tag.name }}</span>
-      </div>
+  <div class="mt-10">
+    {% for balance in balances %}
+    
+    <div class="bg-gray-600 my-3 rounded-lg w-4/12 mx-auto p-4">
+        <a href="{% url 'balance_viewer' %}?id={{balance.id}}">
+          <h1 class="text-gray-50 text-4xl">{{ balance.name }}</h1>
+          {% if balance.value < 0 %}
+          <span class="text-red-700 mt-2">- R$ {{ balance.value }}</span>
+          {% else %}
+          <span class="text-green-700 mt-2">+ R$ {{ balance.value }}</span>
+          {% endif %}
+        </a>
     </div>
 
-    <div
-      class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg"
-    ></div>
+    {% endfor %}
   </div>
 
-  {% endfor %}
-  </div>
+
+
   
+  {% comment %} floating button {% endcomment %}
+  <a href="{% url 'add_balance' %}"
+  class="fixed z-90 bottom-10 right-8 bg-green-600 w-20 h-20 rounded-full 
+ drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-2xl"
+ >
+    +
+ </a>
+
+
 </main>
 
 {% endblock %}

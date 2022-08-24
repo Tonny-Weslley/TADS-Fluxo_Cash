@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views import View
 
-from ..models import UserProfile
-
 
 class Index(View):
     def get(self, request, *args, **kwargs):
@@ -59,8 +57,6 @@ class Register(View):
             user.first_name = request.POST['first-name']
             user.last_name = request.POST['last-name']
             user.save()
-            userProfile = UserProfile(user=user, balance=0)
-            userProfile.save()
             return redirect('login')
         else:
             context = {'errors': errors}

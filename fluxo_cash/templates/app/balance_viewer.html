@@ -1,0 +1,74 @@
+{% extends 'global/base.html' %} {% load static %} {% block content %} 
+{%include 'components/navbar_app.html' %}
+
+
+<div class="flex justify-center mt-10">
+
+    <form action="{% url 'add_record' %}" method="post" 
+    class="w-4/12 h-fit rounded-full flex justify-center items-center text-gray-700 text-4xl"
+>
+{% csrf_token %}
+    <input type="hidden" value="{{balance.id}}" name="balance">
+    <select name="type" id="type" class="border-none rounded-l-lg">
+      <option value="0" class="backdrop-opacity-60">🔴</option>
+      <option value="1" class="backdrop-opacity-60">🟢</option>
+    </select>
+    <input
+    type="text"
+      name="name"
+      class="border-none"
+      placeholder="Register Name"
+      required
+    />
+    <input
+    type="number"
+    step="any"
+    name="value"
+    id="value"
+    class="border-none w-40"
+      placeholder="Value"
+      required
+    />
+    <select name="tag" id="tag" class="border-none">
+      <option value="" hidden>Tag</option>
+      {% for tag in tags %}
+        <option value="{{ tag.id }}">{{ tag.name }}</option>
+      {% endfor %}
+    </select>
+
+    <button
+    type="submit"
+      class="bg-green-800 text-gray-50 px-5 rounded-r-lg align-center"
+      >
+      +
+    </button>
+  </form>
+</div>
+  
+  
+
+{% for record in records %}
+
+            <div class="flex w-4/12 mt-4 m-auto">
+                <div class="flex flex-col bg-slate-200 pr-28 pl-8 rounded-l-lg w-full">
+                    <span class="text-gray-50 text-2xl">{{ record.name }}</span>
+
+                    {% if record.record_type == 0 %}
+                    <span class="text-red-500 mt-2">- R$ {{ record.value }}</span>
+                    {% else %}
+                    <span class="text-green-500 mt-2">+ R$ {{ record.value }}</span>
+                    {% endif %}
+
+                    <span class="text-gray-50 mt-2">{{ record.id_tag.name }}</span>
+                </div>
+                <div class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg">
+                    <img src=" {% static 'images/icons/copy.png' %} " class="w-7">
+                    <img src=" {% static 'images/icons/edit.png' %} " class="w-7  my-5">
+                    <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+{% endblock %}
