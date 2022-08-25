@@ -4,7 +4,7 @@
 
 <div class="flex justify-center mt-10">
 
-    <form action="{% url 'add_record' %}" method="post" 
+    <form action="{% url 'add_record' %}" method="POST" 
     class="w-4/12 h-fit rounded-full flex justify-center items-center text-gray-700 text-4xl"
 >
 {% csrf_token %}
@@ -30,7 +30,7 @@
       required
     />
     <select name="tag" id="tag" class="border-none">
-      <option value="" hidden>Tag</option>
+      <option value="" hidden required>Tag</option>
       {% for tag in tags %}
         <option value="{{ tag.id }}">{{ tag.name }}</option>
       {% endfor %}
@@ -51,7 +51,7 @@
 
             <div class="flex w-4/12 mt-4 m-auto">
                 <div class="flex flex-col bg-slate-200 pr-28 pl-8 rounded-l-lg w-full">
-                    <span class="text-gray-50 text-2xl">{{ record.name }}</span>
+                    <span class="text-gray-700 text-2xl mt-4">{{ record.name }}</span>
 
                     {% if record.record_type == 0 %}
                     <span class="text-red-500 mt-2">- R$ {{ record.value }}</span>
@@ -59,7 +59,7 @@
                     <span class="text-green-500 mt-2">+ R$ {{ record.value }}</span>
                     {% endif %}
 
-                    <span class="text-gray-50 mt-2">{{ record.id_tag.name }}</span>
+                    <span class="text-gray-700 mt-2">{{ record.id_tag.name }}</span>
                 </div>
                 <div class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg">
                     <img src=" {% static 'images/icons/copy.png' %} " class="w-7">

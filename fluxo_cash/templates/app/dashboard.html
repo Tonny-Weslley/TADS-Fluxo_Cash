@@ -13,9 +13,9 @@
         <a href="{% url 'balance_viewer' %}?id={{balance.id}}">
           <h1 class="text-gray-50 text-4xl">{{ balance.name }}</h1>
           {% if balance.value < 0 %}
-          <span class="text-red-700 mt-2">- R$ {{ balance.value }}</span>
+          <span class="text-red-800 mt-2 text-lg">- R$ {{ balance.value }}</span>
           {% else %}
-          <span class="text-green-700 mt-2">+ R$ {{ balance.value }}</span>
+          <span class="text-green-700 mt-2 text-lg">+ R$ {{ balance.value }}</span>
           {% endif %}
         </a>
     </div>

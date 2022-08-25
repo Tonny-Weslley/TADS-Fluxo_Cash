@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -18,15 +20,15 @@ class Balance(models.Model):
     date_in = models.DateField(auto_now_add=True, blank=True)
     value = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    def ajust(self, type, rec_value):
-        if(type == 1):
-            self.value += rec_value
+    def ajust(self, income, rec_value):
+        if(income):
+            self.value += Decimal(rec_value)
         else:
-            self.value -= rec_value
+            self.value -= Decimal(rec_value)
         self.save()
 
     def __str__(self):
-        return (f'{self.id} - {self.id_userProfile.user.username} - {self.value}')
+        return (f'{self.id} - {self.id_user.username} - {self.value}')
 
 
 class Record(models.Model):
@@ -39,4 +41,7 @@ class Record(models.Model):
     date_in = models.DateField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        return (f'{self.id} - {self.id_userProfile.user.username} - {self.name}')
+        return (f'{self.id} - {self.id_balance.name} - {self.name}')
+
+    class Meta:
+        ordering = ('date_in',)

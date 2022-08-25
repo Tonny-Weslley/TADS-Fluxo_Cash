@@ -1,4 +1,4 @@
-from unicodedata import decimal
+from http.client import HTTPResponse
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -32,7 +32,8 @@ class AddBalance(View):
 class BalanceView(View):
     def get(self, request, *args, **kwargs):
         balance = Balance.objects.get(id=request.GET.get('id'))
-        records = Record.objects.filter(id_balance=balance)
+        records = Record.objects.filter(
+            id_balance=balance).order_by('date_in')
         tags = Tag.objects.all()
         context = {'balance': balance, 'records': records, 'tags': tags}
         return render(request, 'app/balance_viewer.html', context)
@@ -66,8 +67,21 @@ class AddRecord(View):
                 rec = Record(name=rec_name, value=rec_value,
                              record_type=rec_type, id_tag=rec_tag, id_balance=balance)
                 rec.save()
-                balance.ajust(rec.value, rec.record_type)
-                return redirect('balance_viewer')
+                balance.ajust(rec.record_type, rec_value)
 
+                return redirect('app')
+
+        else:
+            return redirect('login')
+
+
+class deleteRecord(View):
+    def post(self, request, *args, **kwargs):
+        if(request.user.is_authenticated):
+            record = Record.objects.get(id=request.POST['id'])
+            balance = record.id_balance
+            balance.ajust(-record.value, record.record_type)
+            record.delete()
+            return redirect('balance_viewer')
         else:
             return redirect('login')
