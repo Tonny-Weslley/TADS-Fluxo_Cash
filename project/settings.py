@@ -20,20 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(#oe7ffxa4g$1%qt4m825i62u--gux21%97u&+v=c-_bb!3q_l'
+SECRET_KEY = 'django-insecure-@s*co$w$ot_-qhe*g$(q*#h+-ok@0oi%o^@9uw2(py!)-eu49&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tonnyweslleyv2.pythonanywhere.com']
 
-TAILWIND_APP_NAME = 'theme'
 
-INTERNAL_IPS = [
-    "127.0.0.1", "localhost",
-]
-
-NPM_BIN_PATH = "C:\Program Files\\nodejs\\npm.cmd"
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,10 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_browser_reload',
-    'tailwind',
-    'theme',
-    'fluxo_cash',
+    'fluxo_cash'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
