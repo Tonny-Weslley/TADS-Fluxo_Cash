@@ -62,13 +62,26 @@
                     <span class="text-gray-700 mt-2">{{ record.id_tag.name }}</span>
                 </div>
                 <div class="py-3 px-5 {% if record.record_type == 0 %}bg-red-500 {% else %}bg-green-500{% endif %} rounded-r-lg">
-                    <img src=" {% static 'images/icons/copy.png' %} " class="w-7">
-                    <img src=" {% static 'images/icons/edit.png' %} " class="w-7  my-5">
-                    <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
+                    <a href=" {% url 'duplicate_record' %}?id={{ record.id }} ">
+                      <img src=" {% static 'images/icons/copy.png' %} " class="w-7">
+                    </a>
+                    <a href="">
+                      <img src=" {% static 'images/icons/edit.png' %} " class="w-7  my-5">
+                    </a>
+                    <a href=" {% url 'delete_record' %}?id={{ record.id }} ">
+                      <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
+                    </a>
                 </div>
 
             </div>
 
         {% endfor %}
+
+        <a href="{% url 'delete_balance' %}?id={{balance.id}}"
+        class="fixed z-90 bottom-10 right-8 bg-red-500 w-20 h-20 rounded-full 
+       drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-2xl"
+       >
+        <img src=" {% static 'images/icons/trash.png' %} "class="w-7">
+       </a>
 
 {% endblock %}

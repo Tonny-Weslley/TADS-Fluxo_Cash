@@ -1,4 +1,6 @@
+from ast import Not
 from http.client import HTTPResponse
+from webbrowser import get
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -26,6 +28,13 @@ class AddBalance(View):
         name = request.POST.get('name')
         balance = Balance(id_user=request.user, name=name, value=0)
         balance.save()
+        return redirect('app')
+
+
+class DeleteBalance(View):
+    def get(self, request, *args, **kwargs):
+        balance = Balance.objects.get(id=request.GET.get('id'))
+        balance.delete()
         return redirect('app')
 
 
@@ -75,13 +84,27 @@ class AddRecord(View):
             return redirect('login')
 
 
-class deleteRecord(View):
-    def post(self, request, *args, **kwargs):
+class DeleteRecord(View):
+    def get(self, request, *args, **kwargs):
         if(request.user.is_authenticated):
-            record = Record.objects.get(id=request.POST['id'])
+            record = Record.objects.get(id=request.GET['id'])
             balance = record.id_balance
-            balance.ajust(-record.value, record.record_type)
+            balance.ajust(not(bool(record.record_type)), record.value)
             record.delete()
-            return redirect('balance_viewer')
+            return redirect('app')
+        else:
+            return redirect('login')
+
+
+class DuplicateRecord(View):
+    def get(self, request, *args, **kwargs):
+        if(request.user.is_authenticated):
+            record = Record.objects.get(id=request.GET['id'])
+            balance = Balance.objects.get(id=record.id_balance.id)
+            rec = Record(name=record.name, value=record.value, id_balance=record.id_balance,
+                         id_tag=record.id_tag, record_type=record.record_type)
+            rec.save()
+            balance.ajust(rec.record_type, rec.value)
+            return redirect('app')
         else:
             return redirect('login')

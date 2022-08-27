@@ -13,5 +13,8 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
     path('add_record/', AddRecord.as_view(), name='add_record'),
     path('add_balance/', AddBalance.as_view(), name='add_balance'),
+    path('delete_balance', DeleteBalance.as_view(), name='delete_balance'),
     path('balance_viewer/', BalanceView.as_view(), name='balance_viewer'),
+    path('duplicate_record/', DuplicateRecord.as_view(), name='duplicate_record'),
+    path('delete_record/', DeleteRecord.as_view(), name='delete_record'),
 ]
